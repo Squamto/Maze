@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 	auto t1 = std::chrono::high_resolution_clock::now();
 	m.generate();
 	auto t2 = std::chrono::high_resolution_clock::now();
-	auto ms_int = duration_cast<std::chrono::milliseconds>(t2 - t1);
+	auto ms_int = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 	std::cout << "Berechnet in: " << ms_int.count() << "ms" << std::endl;
 	m.saveToFile(filePath);
 }
