@@ -1,37 +1,45 @@
 #pragma once
 #include <array>
 #include <string>
+#include <vector>
+#include <random>
 
-class Maze
+namespace Maze
 {
-public:
-	Maze(unsigned int width, unsigned int height);
-	~Maze();
-
-	void generate();
-
-	bool saveToFile(const std::string& filePath) const;
-
-	unsigned int width, height;
-
-	friend std::ostream& operator <<(std::ostream& outs, const Maze& other);
-
-private:
 	enum class Direction
 	{
-		LEFT = -2,
-		RIGHT = -1,
-		NONE = 0,
-		UP = 1,
-		DOWN = 2
+		NONE,
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
 	};
 
-	bool* m_walls;
+	class Maze
+	{
+	public:
+		Maze(unsigned int width, unsigned int height);
+		~Maze();
 
-	bool canRemoveWall(int x, int y) const;
-	Direction seekPath(int x, int y);
-	unsigned int toIndex(int x, int y) const;
+		void generate(std::vector<Direction>& directions);
+
+		bool saveToFile(const std::string& filePath) const;
+
+		unsigned int width, height;
+
+		friend std::ostream& operator <<(std::ostream& outs, const Maze& other);
+
+	private:
+		bool* m_cell;
+
+		int exitX;
+		std::mt19937 rng;
+
+		bool canRemoveWall(int x, int y) const;
+		Direction seekPath(int x, int y);
+		unsigned int toIndex(int x, int y) const;
 
 
-};
+	};
 
+}
